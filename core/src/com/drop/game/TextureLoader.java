@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
  */
 
 public class TextureLoader {
+    //vfyg
     public static Texture lilSpaceshipTex, biggerSpaceship,redLaserTex, meteoriteTex, joyTex, joy2Tex, basicGreenBulletTex, starsBack, heartTex;
     public static TextureAtlas lilExpAtlas, lilPropAtlas, meteorExpAtlas, textures;
     public static AssetManager assets;
