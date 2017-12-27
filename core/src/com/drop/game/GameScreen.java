@@ -60,7 +60,7 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         camera.position.set(levelManager.playerShip.getLocationVector().x,levelManager.playerShip.getLocationVector().y,0);
         center.set(camera.position.x,camera.position.y);
-        fpsLogger.log();
+        //fpsLogger.log();
         levelManager.logic();
         Gdx.gl.glClearColor(0,0,0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);

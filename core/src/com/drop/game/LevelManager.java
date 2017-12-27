@@ -119,8 +119,8 @@ public class LevelManager {
         spawner.spawn();
         if (obstacles.size + boids.size != objAm) {
             objAm = obstacles.size + boids.size;
-            System.out.println("Objects amount: " + (objAm));
-            System.out.println("Bullets amount: " + (bulletManager.bulletsAlive));
+            //System.out.println("Objects amount: " + (objAm));
+            //System.out.println("Bullets amount: " + (bulletManager.bulletsAlive));
         }
     }
 

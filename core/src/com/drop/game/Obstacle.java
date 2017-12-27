@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Intersector;
@@ -39,10 +40,11 @@ public class Obstacle implements Pool.Poolable {
     private Intersector.MinimumTranslationVector mtv;
     private Intersector intersector;
     private Animation<TextureRegion> expAnim;
-    private float mass = 240.0f, timePassed;
+    private float mass = 240.0f, timePassed, angularVelocity=0f, phi=0f, radius = 0;  //=random(3)-1.5f
     private int hp = 700, maxHp = 700;
     private float[] vertices = new float[22];
 
+    private Sprite sprite;
     Obstacle(Spawner spawner) {
         healthBar = new HealthBar(maxHp, 0.7f, 1.0f, Color.RED);
         random = new java.util.Random();
@@ -57,6 +59,8 @@ public class Obstacle implements Pool.Poolable {
         meteorVelocity.nor().scl(1f);
         intersector = new Intersector();
         expAnim = new Animation<TextureRegion>(0.10f, TextureLoader.meteorExpAtlas.getRegions());
+
+
         vertices[0] = meteorite.width * 1 / 32;
         vertices[1] = meteorite.height * 13 / 32;
         vertices[2] = meteorite.width * 6 / 32;
@@ -81,12 +85,18 @@ public class Obstacle implements Pool.Poolable {
         vertices[21] = meteorite.height * 20 / 32;
         collider.setVertices(vertices);
         this.spawner = spawner;
+        sprite = new Sprite(TextureLoader.textures.findRegion("meteorite"));
+        sprite.setScale(scl*8.5f);
+        radius = sprite.getWidth()/2;
+
     }
 
     public void init() {
         isAlive = true;
         hp = maxHp;
         marked = false;
+        angularVelocity =0;
+        phi=0;
         healthBar = new HealthBar(maxHp, 0.7f, 2.0f, Color.RED);
         float angle = random(2 * PI);
         float xdir;
@@ -164,7 +174,7 @@ public class Obstacle implements Pool.Poolable {
 
     public boolean collide(Obstacle menace) {
         if (Intersector.overlapConvexPolygons(collider, menace.getPolygon(), mtv)) {
-            Physics.collideWithObstacle(this, menace, mtv);
+            Physics.collideWithObstacleWithFriction(this, menace, mtv);
             return true;
         } else
             return false;
@@ -182,6 +192,8 @@ public class Obstacle implements Pool.Poolable {
         return this.mass;
     }
 
+    public float getAngularVelocity(){return this.angularVelocity;}
+
     public Vector2 getPosition() {
         return new Vector2(meteorLocation);
     }
@@ -190,9 +202,16 @@ public class Obstacle implements Pool.Poolable {
         meteorVelocity.set(newVelocity);
     }
 
+    public void addAngVel(float angularVelocity)
+    {
+        this.angularVelocity += (angularVelocity*180)/PI;
+    }
+
     public boolean isAlive() {
         return isAlive;
     }
+
+    public float getRadius(){return radius;}
 
     public void hit(int damage) {
         if(hp>0) {
@@ -227,14 +246,23 @@ public class Obstacle implements Pool.Poolable {
         if (hp <= 0) {
             startExp = true;
         }
+        phi+=angularVelocity;
+        while(phi>=360)
+        {
+            phi=phi-360;
+        }
         meteorLocation.add(new Vector2().set(meteorVelocity));
         collider.setPosition(meteorLocation.x - meteorite.width / 2, meteorLocation.y - meteorite.height / 2);
         healthBar.logic(hp, getPosition());
     }
 
     public void show(Batch batch) {
-        if (!startExp)
-            batch.draw(TextureLoader.meteoriteTex, meteorLocation.x - meteorite.width / 2, meteorLocation.y - meteorite.height / 2, meteorite.width, meteorite.height);
+        if (!startExp) {
+            //batch.draw(TextureLoader.meteoriteTex, meteorLocation.x - meteorite.width / 2, meteorLocation.y - meteorite.height / 2, meteorite.width, meteorite.height);
+            sprite.setPosition(meteorLocation.x - sprite.getWidth() / 2, meteorLocation.y - sprite.getHeight() / 2);
+            sprite.setRotation(phi-90);
+            sprite.draw(batch);
+        }
         else {
             if (!expAnim.isAnimationFinished(timePassed)) {
                 batch.draw(expAnim.getKeyFrame(timePassed, true), meteorLocation.x - meteorite.width / 2, meteorLocation.y - meteorite.height / 2, meteorite.width / 2, meteorite.height / 2, meteorite.width, meteorite.height, 1.0f, 1.0f, 0);
