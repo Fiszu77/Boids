@@ -174,7 +174,7 @@ public class Obstacle implements Pool.Poolable {
 
     public boolean collide(Obstacle menace) {
         if (Intersector.overlapConvexPolygons(collider, menace.getPolygon(), mtv)) {
-            Physics.collideWithObstacleWithFriction(this, menace, mtv);
+            Physics.collideWithObstacle(this, menace, mtv);
             return true;
         } else
             return false;

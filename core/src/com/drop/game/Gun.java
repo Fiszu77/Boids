@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Gun {
     protected float delay = 0.18f;
     protected BulletManager bulletManager;
+
     Gun(BulletManager bulletManager)
     {
         this.bulletManager = bulletManager;

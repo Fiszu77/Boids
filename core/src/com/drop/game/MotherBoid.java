@@ -199,11 +199,13 @@ public class MotherBoid implements Healable{
 
             position.add(collisionVelocity);
             accumulated += Gdx.graphics.getDeltaTime();
-            if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || controls.shoot) && accumulated >= period) {
+            if ((Gdx.input.isKeyPressed(Input.Keys.SPACE) || controls.shoot)) {
                 boidsRotationVector.nor();
-                //guns.get(choosenGun).shoot()
+                //needs optimalization
+
                 Vector2 tangent = new Vector2(boidsRotationVector.y, -boidsRotationVector.x);
-                bulletManager.shootRocket(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))), new Vector2(boidsRotationVector));
+                guns.get(choosenGun).shoot(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))),boidsRotationVector,accumulated);
+                //bulletManager.shootRocket(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))), new Vector2(boidsRotationVector));
                 gunSclWidth = -gunSclWidth;
                 accumulated = 0;
             }
