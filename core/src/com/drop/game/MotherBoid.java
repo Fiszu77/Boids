@@ -104,6 +104,7 @@ public class MotherBoid implements Healable{
         collider.setVertices(vertices);
         collider.setOrigin(boidsCollision.width/2,boidsCollision.height/2);
         guns = new Array<Gun>();
+        guns.add(new RocketGun(bulletManager));
         guns.add(new Gun(bulletManager));
         sprite = new Sprite(TextureLoader.textures.findRegion("spaceship3"));
         sprite.setScale(scl*8.5f);
@@ -196,6 +197,11 @@ public class MotherBoid implements Healable{
             if (!startExp && hp <= 0) {
                 kill();
             }
+            if(Gdx.input.isKeyPressed(Input.Keys.A)&&choosenGun<guns.size-1)
+                choosenGun++;
+
+            if(Gdx.input.isKeyPressed(Input.Keys.S)&&choosenGun>=1)
+                choosenGun--;
 
             position.add(collisionVelocity);
             accumulated += Gdx.graphics.getDeltaTime();
@@ -204,10 +210,10 @@ public class MotherBoid implements Healable{
                 //needs optimalization
 
                 Vector2 tangent = new Vector2(boidsRotationVector.y, -boidsRotationVector.x);
-                guns.get(choosenGun).shoot(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))),boidsRotationVector,accumulated);
-                //bulletManager.shootRocket(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))), new Vector2(boidsRotationVector));
-                gunSclWidth = -gunSclWidth;
-                accumulated = 0;
+                if(guns.get(choosenGun).shoot(new Vector2(position).add(new Vector2(boidsRotationVector).scl(boid.height * gunSclHeight).add(tangent.scl(boid.width * gunSclWidth))),boidsRotationVector,accumulated)) {
+                    gunSclWidth = -gunSclWidth;
+                    accumulated = 0;
+                }
             }
             if (collisionVelocity.len2() > 0.014f) {
                 velocity.set(0.0f, 0.0f);
