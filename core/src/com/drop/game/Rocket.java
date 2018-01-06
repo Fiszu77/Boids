@@ -50,7 +50,7 @@ public class Rocket extends Bullet {
                 angle += 360.0f;
             }
 
-            if (!(angle >= 100.0f && angle <= 260.0f)) {
+            if (!(angle >= 90.0f && angle <= 270.0f)) {
 
                 dist = obstacles.get(i).getPosition().dst2(position);
                 if (dist < minDist) {
