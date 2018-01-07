@@ -214,7 +214,7 @@ public class LevelManager {
 
     private void moveObstacles(Array<Obstacle> obstacles) {
         for (Obstacle obstacle : obstacles) {
-            obstacle.move();
+            obstacle.move(particles);
         }
     }
 }

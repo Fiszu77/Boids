@@ -17,12 +17,12 @@ import static com.drop.game.MainMenuScreen.scl;
 
 public class Particles {
 
-    ParticleEffect heart, meteorSliver, rocketProp;
-    ParticleEffectPool heartPool, mSliverPool, rocketPool;
-    Array<ParticleEffectPool.PooledEffect> heartEffects, mSliverEffects,rocketEffects;
+    ParticleEffect heart, meteorSliver,meteorExp, rocketProp;
+    ParticleEffectPool heartPool, mSliverPool,mExpPool, rocketPool;
+    Array<ParticleEffectPool.PooledEffect> heartEffects, mSliverEffects,mExpEffects,rocketEffects;
     Collideable heartHolder;
     Rocket rocket;
-    Array<Vector2> mSliverPos, mSliverVel;
+    Array<Vector2> mSliverPos, mSliverVel,mExpPos,mExpVel;
     Particles()
     {
         mSliverPos = new Array<Vector2>();
@@ -38,6 +38,15 @@ public class Particles {
         meteorSliver.setEmittersCleanUpBlendFunction(false);
         mSliverPool = new ParticleEffectPool(meteorSliver,1,5);
         meteorSliver.load(Gdx.files.internal("meteorbang.p"), TextureLoader.textures);
+
+
+        mExpPos = new Array<Vector2>();
+        mExpVel = new Array<Vector2>();
+        mExpEffects= new Array<ParticleEffectPool.PooledEffect>();
+        meteorExp = new ParticleEffect();
+        meteorExp.setEmittersCleanUpBlendFunction(false);
+        mExpPool = new ParticleEffectPool(meteorExp,1,5);
+        meteorExp.load(Gdx.files.internal("meteorExp.p"), TextureLoader.textures);
 
         rocketEffects= new Array<ParticleEffectPool.PooledEffect>();
         rocketProp = new ParticleEffect();
@@ -65,6 +74,17 @@ public class Particles {
         effect.start();
         mSliverEffects.add(effect);
     }
+    void addMeteorExp(float x, float y, Vector2 veloctiy)
+    {
+        ParticleEffectPool.PooledEffect effect = mExpPool.obtain();
+        mExpPos.add(new Vector2(x,y));
+        mExpVel.add(veloctiy);
+        //mSliverVel.peek();
+        effect.setPosition(x,y);
+        effect.scaleEffect(scl*0.5f);
+        effect.start();
+        mExpEffects.add(effect);
+    }
     void draw(Batch batch)
     {
         for(int i=heartEffects.size-1; i>=0; i--)
@@ -90,6 +110,20 @@ public class Particles {
                 mSliverVel.removeIndex(i);
                 effect.free();
                 mSliverEffects.removeIndex(i);
+            }
+        }
+        for(int i=mExpEffects.size-1; i>=0; i--)
+        {
+            mExpPos.get(i).add(mExpVel.get(i));
+            ParticleEffectPool.PooledEffect effect = mExpEffects.get(i);
+            effect.draw(batch, Gdx.graphics.getDeltaTime());
+            effect.setPosition(mExpPos.get(i).x,mExpPos.get(i).y);
+            if(effect.isComplete())
+            {
+                mExpPos.removeIndex(i);
+                mExpVel.removeIndex(i);
+                effect.free();
+                mExpEffects.removeIndex(i);
             }
         }
     }

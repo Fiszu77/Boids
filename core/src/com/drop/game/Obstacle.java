@@ -60,7 +60,6 @@ public class Obstacle implements Pool.Poolable {
         intersector = new Intersector();
         expAnim = new Animation<TextureRegion>(0.10f, TextureLoader.meteorExpAtlas.getRegions());
 
-
         vertices[0] = meteorite.width * 1 / 32;
         vertices[1] = meteorite.height * 13 / 32;
         vertices[2] = meteorite.width * 6 / 32;
@@ -218,10 +217,10 @@ public class Obstacle implements Pool.Poolable {
             hp -= damage;
             healthBar.changeHp(hp);
             //System.out.println("obst hp:"+hp);
-            if (hp <= 0) {
-                startExp = true;
-                spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
-            }
+           // if (hp <= 0) {
+               // startExp = true;
+                //spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
+           // }
         }
     }
 
@@ -234,7 +233,7 @@ public class Obstacle implements Pool.Poolable {
         return "Meteorite";
     }
 
-    public void move() {
+    public void move(Particles particles) {
         if (meteorLocation.x > SCREEN_WIDTH * 2f + center.x)
             isAlive = false;
         if (meteorLocation.x < center.x - SCREEN_WIDTH * 2f)
@@ -244,7 +243,13 @@ public class Obstacle implements Pool.Poolable {
         if (meteorLocation.y < center.y - SCREEN_HEIGHT * 2f)
             isAlive = false;
         if (hp <= 0) {
+            if(!startExp)
+            {
+                spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
+                particles.addMeteorExp(sprite.getX()+sprite.getWidth()/2,sprite.getY()+sprite.getHeight()/2,meteorVelocity);
+            }
             startExp = true;
+
         }
         phi+=angularVelocity;
         while(phi>=360)
