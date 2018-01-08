@@ -10,7 +10,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Gun {
-    protected float delay = 0.18f;
+    protected float delay = 0.08f;
     protected BulletManager bulletManager;
 
     Gun(BulletManager bulletManager)
@@ -21,7 +21,7 @@ public class Gun {
     {
         if(accumulated>=delay)
         {
-            bulletManager.shootGreenBullet(position, velocity);
+            bulletManager.shootRedBullet(position, velocity);
             return true;
         }
         return false;

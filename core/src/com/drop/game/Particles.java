@@ -26,30 +26,20 @@ public class Particles {
     private  Array<Particle> particles;
     Particles()
     {
-        mSliverPos = new Array<Vector2>();
-        mSliverVel = new Array<Vector2>();
+
+        particles = new Array<Particle>();
+
         heartEffects = new Array<ParticleEffectPool.PooledEffect>();
         heart = new ParticleEffect();
         heart.setEmittersCleanUpBlendFunction(false);
         heartPool = new ParticleEffectPool(heart,1,5);
         heart.load(Gdx.files.internal("crossPart.p"), TextureLoader.textures);
 
-        mSliverEffects= new Array<ParticleEffectPool.PooledEffect>();
-        meteorSliver = new ParticleEffect();
-        meteorSliver.setEmittersCleanUpBlendFunction(false);
-        mSliverPool = new ParticleEffectPool(meteorSliver,1,5);
-        meteorSliver.load(Gdx.files.internal("meteorbang.p"), TextureLoader.textures);
 
         particles.add(new Particle("meteorExp.p"));
         particles.add(new Particle("meteorbang.p"));
+        particles.add(new Particle("meteorShoot.p"));
 
-        mExpPos = new Array<Vector2>();
-        mExpVel = new Array<Vector2>();
-        mExpEffects= new Array<ParticleEffectPool.PooledEffect>();
-        meteorExp = new ParticleEffect();
-        meteorExp.setEmittersCleanUpBlendFunction(false);
-        mExpPool = new ParticleEffectPool(meteorExp,1,5);
-        meteorExp.load(Gdx.files.internal("meteorExp.p"), TextureLoader.textures);
 
         rocketEffects= new Array<ParticleEffectPool.PooledEffect>();
         rocketProp = new ParticleEffect();
@@ -69,26 +59,13 @@ public class Particles {
     void addMeteorSliver(float x, float y, Vector2 veloctiy)
     {
         particles.get(1).addParticle(x,y,veloctiy);
-        /*
-        ParticleEffectPool.PooledEffect effect = mSliverPool.obtain();
-        mSliverPos.add(new Vector2(x,y));
-        mSliverVel.add(veloctiy);
-        //mSliverVel.peek();
-        effect.setPosition(x,y);
-        effect.scaleEffect(scl*0.5f);
-        effect.start();
-        mSliverEffects.add(effect);*/
     }
     void addMeteorExp(float x, float y, Vector2 veloctiy)
-    {/*
-        ParticleEffectPool.PooledEffect effect = mExpPool.obtain();
-        mExpPos.add(new Vector2(x,y));
-        mExpVel.add(veloctiy);
-        //mSliverVel.peek();
-        effect.setPosition(x,y);
-        effect.scaleEffect(scl*0.5f);
-        effect.start();
-        mExpEffects.add(effect);*/
+    {
+        particles.get(0).addParticle(x,y,veloctiy);
+    }
+    void addMeteorShoot(float x, float y, Vector2 veloctiy)
+    {
         particles.get(0).addParticle(x,y,veloctiy);
     }
     void draw(Batch batch)
@@ -107,35 +84,5 @@ public class Particles {
         for (Particle particle : particles) {
             particle.draw(batch);
         }
-        /*
-        for(int i=mSliverEffects.size-1; i>=0; i--)
-        {
-            mSliverPos.get(i).add(mSliverVel.get(i));
-            ParticleEffectPool.PooledEffect effect = mSliverEffects.get(i);
-            effect.draw(batch, Gdx.graphics.getDeltaTime());
-            effect.setPosition(mSliverPos.get(i).x,mSliverPos.get(i).y);
-            if(effect.isComplete())
-            {
-                mSliverPos.removeIndex(i);
-                mSliverVel.removeIndex(i);
-                effect.free();
-                mSliverEffects.removeIndex(i);
-            }
-        }
-        for(int i=mExpEffects.size-1; i>=0; i--)
-        {
-            mExpPos.get(i).add(mExpVel.get(i));
-            ParticleEffectPool.PooledEffect effect = mExpEffects.get(i);
-            effect.draw(batch, Gdx.graphics.getDeltaTime());
-            effect.setPosition(mExpPos.get(i).x,mExpPos.get(i).y);
-            if(effect.isComplete())
-            {
-                mExpPos.removeIndex(i);
-                mExpVel.removeIndex(i);
-                effect.free();
-                mExpEffects.removeIndex(i);
-            }
-        }
-        */
     }
 }
