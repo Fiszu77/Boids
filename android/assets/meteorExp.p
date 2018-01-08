@@ -1,17 +1,19 @@
 mud1
 - Delay -
-active: false
+active: true
+lowMin: 0.0
+lowMax: 0.0
 - Duration - 
-lowMin: 200.0
-lowMax: 200.0
+lowMin: 100.0
+lowMax: 100.0
 - Count - 
 min: 0
 max: 200
 - Emission - 
-lowMin: 25.0
-lowMax: 25.0
-highMin: 35.0
-highMax: 35.0
+lowMin: 20.0
+lowMax: 20.0
+highMin: 30.0
+highMax: 30.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -20,8 +22,8 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 500.0
-highMax: 1000.0
+highMin: 700.0
+highMax: 1200.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -76,7 +78,7 @@ active: true
 lowMin: 0.0
 lowMax: 0.0
 highMin: 500.0
-highMax: 600.0
+highMax: 700.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -142,16 +144,16 @@ mud1
 - Delay -
 active: false
 - Duration - 
-lowMin: 200.0
-lowMax: 200.0
+lowMin: 100.0
+lowMax: 100.0
 - Count - 
 min: 0
 max: 200
 - Emission - 
-lowMin: 25.0
-lowMax: 25.0
-highMin: 35.0
-highMax: 35.0
+lowMin: 20.0
+lowMax: 20.0
+highMin: 30.0
+highMax: 30.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -160,8 +162,8 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 500.0
-highMax: 1000.0
+highMin: 700.0
+highMax: 1200.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
@@ -282,16 +284,16 @@ mud1
 - Delay -
 active: false
 - Duration - 
-lowMin: 200.0
-lowMax: 200.0
+lowMin: 100.0
+lowMax: 100.0
 - Count - 
 min: 0
 max: 200
 - Emission - 
-lowMin: 25.0
-lowMax: 25.0
-highMin: 35.0
-highMax: 35.0
+lowMin: 20.0
+lowMax: 20.0
+highMin: 30.0
+highMax: 30.0
 relative: false
 scalingCount: 1
 scaling0: 1.0
@@ -300,13 +302,13 @@ timeline0: 0.0
 - Life - 
 lowMin: 0.0
 lowMax: 0.0
-highMin: 500.0
-highMax: 1000.0
+highMin: 700.0
+highMax: 1200.0
 relative: false
 scalingCount: 3
 scaling0: 1.0
 scaling1: 1.0
-scaling2: 0.3
+scaling2: 0.27450982
 timelineCount: 3
 timeline0: 0.0
 timeline1: 0.66

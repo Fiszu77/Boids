@@ -27,7 +27,6 @@ public class World {
         fields.add(new Field(1,1));
         fields.add(new Field(1,0));
         fields.add(new Field(1,-1));
-
     }
     void logic()
     {

@@ -1,3 +1,5 @@
+-gfo this heartCollider in particles
+-class particle
 -develop rockets
 *-add more to spawner class
 *-particle effects

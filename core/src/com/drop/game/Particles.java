@@ -17,12 +17,13 @@ import static com.drop.game.MainMenuScreen.scl;
 
 public class Particles {
 
-    ParticleEffect heart, meteorSliver,meteorExp, rocketProp;
-    ParticleEffectPool heartPool, mSliverPool,mExpPool, rocketPool;
-    Array<ParticleEffectPool.PooledEffect> heartEffects, mSliverEffects,mExpEffects,rocketEffects;
-    Collideable heartHolder;
-    Rocket rocket;
-    Array<Vector2> mSliverPos, mSliverVel,mExpPos,mExpVel;
+    private ParticleEffect heart, meteorSliver,meteorExp, rocketProp;
+    private  ParticleEffectPool heartPool, mSliverPool,mExpPool, rocketPool;
+    private  Array<ParticleEffectPool.PooledEffect> heartEffects, mSliverEffects,mExpEffects,rocketEffects;
+    private  Collideable heartHolder;
+    private  Rocket rocket;
+    private  Array<Vector2> mSliverPos, mSliverVel,mExpPos,mExpVel;
+    private  Array<Particle> particles;
     Particles()
     {
         mSliverPos = new Array<Vector2>();
@@ -39,6 +40,8 @@ public class Particles {
         mSliverPool = new ParticleEffectPool(meteorSliver,1,5);
         meteorSliver.load(Gdx.files.internal("meteorbang.p"), TextureLoader.textures);
 
+        particles.add(new Particle("meteorExp.p"));
+        particles.add(new Particle("meteorbang.p"));
 
         mExpPos = new Array<Vector2>();
         mExpVel = new Array<Vector2>();
@@ -65,6 +68,8 @@ public class Particles {
     }
     void addMeteorSliver(float x, float y, Vector2 veloctiy)
     {
+        particles.get(1).addParticle(x,y,veloctiy);
+        /*
         ParticleEffectPool.PooledEffect effect = mSliverPool.obtain();
         mSliverPos.add(new Vector2(x,y));
         mSliverVel.add(veloctiy);
@@ -72,10 +77,10 @@ public class Particles {
         effect.setPosition(x,y);
         effect.scaleEffect(scl*0.5f);
         effect.start();
-        mSliverEffects.add(effect);
+        mSliverEffects.add(effect);*/
     }
     void addMeteorExp(float x, float y, Vector2 veloctiy)
-    {
+    {/*
         ParticleEffectPool.PooledEffect effect = mExpPool.obtain();
         mExpPos.add(new Vector2(x,y));
         mExpVel.add(veloctiy);
@@ -83,7 +88,8 @@ public class Particles {
         effect.setPosition(x,y);
         effect.scaleEffect(scl*0.5f);
         effect.start();
-        mExpEffects.add(effect);
+        mExpEffects.add(effect);*/
+        particles.get(0).addParticle(x,y,veloctiy);
     }
     void draw(Batch batch)
     {
@@ -98,6 +104,10 @@ public class Particles {
                 heartEffects.removeIndex(i);
             }
         }
+        for (Particle particle : particles) {
+            particle.draw(batch);
+        }
+        /*
         for(int i=mSliverEffects.size-1; i>=0; i--)
         {
             mSliverPos.get(i).add(mSliverVel.get(i));
@@ -126,5 +136,6 @@ public class Particles {
                 mExpEffects.removeIndex(i);
             }
         }
+        */
     }
 }
