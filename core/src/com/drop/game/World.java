@@ -3,8 +3,10 @@ package com.drop.game;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
+import static com.drop.game.GameScreen.center;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
 

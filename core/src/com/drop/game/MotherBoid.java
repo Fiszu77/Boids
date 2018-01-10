@@ -2,6 +2,7 @@ package com.drop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
@@ -25,7 +26,11 @@ import Interfaces.Healable;
 import static com.badlogic.gdx.Gdx.input;
 import static com.badlogic.gdx.Input.Keys.SPACE;
 import static com.badlogic.gdx.math.MathUtils.PI;
+import static com.drop.game.GameScreen.center;
+import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
+import static com.drop.game.MainMenuScreen.getPan;
 import static com.drop.game.MainMenuScreen.scl;
+import static com.drop.game.MainMenuScreen.soundVolume;
 
 
 /**
@@ -54,7 +59,7 @@ public class MotherBoid implements Healable{
     private Intersector.MinimumTranslationVector mtv;
     private Intersector intersector;
     private boolean startExp = false, isAlive = true, autoShoot;
-
+    private Sound explosion;
     private Sprite sprite;
 
     MotherBoid(float startX, float startY, BulletManager bullets,Controls controls)
@@ -67,6 +72,7 @@ public class MotherBoid implements Healable{
         boid.height = 16;
         boidsRotationVector = new Vector2(0,1);
         boid.width = 16;
+        explosion = TextureLoader.lilExp;
         //velocity = new Vector2(random(10.0f)-5.0f,random(10.0f)-5.0f);
         velocity = new Vector2();
         //position = new Vector2(random(Gdx.graphics.getWidth()),random(Gdx.graphics.getHeight()));
@@ -196,6 +202,7 @@ public class MotherBoid implements Healable{
         if (isAlive()) {
             if (!startExp && hp <= 0) {
                 kill();
+                explosion.play(soundVolume,1.0f,getPan(position));
             }
             if(Gdx.input.isKeyPressed(Input.Keys.A)&&choosenGun<guns.size-1)
                 choosenGun++;
@@ -393,6 +400,7 @@ public class MotherBoid implements Healable{
         Polygon collider = this.collider;
         return collider;
     }
+
 
     @Override
     public Sprite getSprite() {

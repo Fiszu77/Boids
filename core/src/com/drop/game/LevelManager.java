@@ -71,7 +71,7 @@ public class LevelManager {
         manageBoidPools();
         manageObstaclesPools();
         manageHeartsPool();
-        bulletManager.bulletsLogic(obstacles);
+        bulletManager.bulletsLogic(obstacles,particles);
 
         if (playerShip.isAlive()) {
             for (int i = 0; i < obstacles.size; i++) {
@@ -89,11 +89,6 @@ public class LevelManager {
         for (SimpleBoid boid : boids) {
             boid.applyRules(boids, playerShip);
             boid.isColliding(obstacles);
-            // boid.noObstacles(false);
-
-            if (obstacles.size == 0) {
-                //boid.noObstacles(true);
-            }
         }
         boolean collidingPairs[][] = new boolean[obstacles.size][obstacles.size];
         for (int i = 0; i < obstacles.size; i++) {

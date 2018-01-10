@@ -47,17 +47,17 @@ public class BulletManager {
         rockets = new Array<Bullet>();
     }
 
-    public void bulletsLogic(Array<Obstacle> obstacles) {
+    public void bulletsLogic(Array<Obstacle> obstacles,Particles particles) {
         for (Bullet bullet : redBullets) {
-            bullet.move(obstacles);
+            bullet.move(obstacles,particles);
 
         }
         for (Bullet bullet : greenBullets) {
-            bullet.move(obstacles);
+            bullet.move(obstacles,particles);
 
         }
         for (Bullet bullet : rockets) {
-            bullet.move(obstacles);
+            bullet.move(obstacles,particles);
 
         }
         checkDeaths();

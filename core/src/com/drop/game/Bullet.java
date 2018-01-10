@@ -19,7 +19,10 @@ import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.drop.game.GameScreen.center;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
+import static com.drop.game.MainMenuScreen.getPan;
+import static com.drop.game.MainMenuScreen.getVolume;
 import static com.drop.game.MainMenuScreen.scl;
+import static com.drop.game.MainMenuScreen.soundVolume;
 
 /**
  * Created by fiszu on 13.09.2017.
@@ -89,10 +92,10 @@ public class Bullet implements Pool.Poolable{
         bullet.x = position.x;
         bullet.y = position.y;
         isAlive=true;
-        shootingSound.play(1.0f);
+        shootingSound.play(soundVolume*0.4f*getVolume(position),1.0f,getPan(position));
     }
 
-    public void move(Array<Obstacle> obstacles) {
+    public void move(Array<Obstacle> obstacles,Particles particles) {
         behave(obstacles);
         position.add(velocity);
         bullet.x = position.x;
@@ -110,6 +113,7 @@ public class Bullet implements Pool.Poolable{
                 if (intersector.isPointInPolygon(obstacle.getPolygon().getTransformedVertices(), 0, obstacle.getPolygon().getTransformedVertices().length, position.x, position.y)) {
                     isAlive = false;
                     obstacle.hit(power);
+                    particles.addMeteorShoot(position.x,position.y,obstacle.getVelocity());
                     break;
                 }
             }

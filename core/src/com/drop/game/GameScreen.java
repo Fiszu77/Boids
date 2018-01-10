@@ -58,7 +58,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.position.set(levelManager.playerShip.getLocationVector().x,levelManager.playerShip.getLocationVector().y,0);
+        //camera.position.set(levelManager.playerShip.getLocationVector().x,levelManager.playerShip.getLocationVector().y,0);
         //camera.position.set(SCREEN_WIDTH/2,SCREEN_HEIGHT/2,0);
         center.set(camera.position.x,camera.position.y);
         //fpsLogger.log();

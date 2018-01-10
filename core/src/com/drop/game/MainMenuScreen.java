@@ -5,11 +5,17 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.Vector2;
+
+import static com.drop.game.GameScreen.center;
+
 public class MainMenuScreen implements Screen {
 
    // public static final int SCREEN_WIDTH = 2560;
     //public static final int SCREEN_HEIGHT = 1440;
-   public static int SCREEN_WIDTH = Gdx.graphics.getWidth();
+    public static float soundVolume = 1.0f;
+    public static float musicVolume = 1.0f;
+    public static int SCREEN_WIDTH = Gdx.graphics.getWidth();
     public static int SCREEN_HEIGHT = Gdx.graphics.getHeight();
     public static float scl = SCREEN_WIDTH / 2560f, reverseScl=640f/SCREEN_WIDTH;
     final MyGdxGame game;
@@ -17,9 +23,10 @@ public class MainMenuScreen implements Screen {
     OrthographicCamera camera;
     public MainMenuScreen(final MyGdxGame game)
     {
-        music = Gdx.audio.newMusic(Gdx.files.internal("Waiting For Launch.mp3"));
-        music.setLooping(true);
-        music.play();
+        //music = Gdx.audio.newMusic(Gdx.files.internal("Waiting For Launch.mp3"));
+        //music.setLooping(true);
+        //music.setVolume(musicVolume);
+        //music.play();
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH,SCREEN_HEIGHT);
@@ -30,7 +37,25 @@ public class MainMenuScreen implements Screen {
         // TODO Auto-generated method stub
 
     }
+    public static float getPan(Vector2 position)
+    {
+        float pan = (position.x-center.x)/(SCREEN_WIDTH*0.5f);
+        if(pan>1.0)
+            pan=1.0f;
 
+        if(pan<-1.0)
+            pan=-1.0f;
+
+        return pan;
+    }
+    public static float getVolume(Vector2 position)
+    {
+        float vol = (SCREEN_WIDTH*0.16f)/position.dst(center);
+        if(vol>1.0f)
+            vol=1.0f;
+
+        return vol;
+    }
     @Override
     public void render(float delta) {
 

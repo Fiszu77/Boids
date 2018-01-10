@@ -52,6 +52,13 @@ spaceship3
   orig: 16, 16
   offset: 0, 0
   index: -1
+rocketBG
+  rotate: false
+  xy: 69, 30
+  size: 7, 14
+  orig: 7, 14
+  offset: 0, 0
+  index: -1
 greenlaser
   rotate: false
   xy: 105, 46
@@ -75,7 +82,7 @@ plasmaBullet
   index: -1
 lilheart
   rotate: false
-  xy: 69, 38
+  xy: 78, 38
   size: 7, 6
   orig: 7, 6
   offset: 0, 0
@@ -103,7 +110,14 @@ mud2
   index: -1
 mud3
   rotate: false
-  xy: 69, 34
+  xy: 78, 34
+  size: 2, 2
+  orig: 2, 2
+  offset: 0, 0
+  index: -1
+part
+  rotate: false
+  xy: 87, 42
   size: 2, 2
   orig: 2, 2
   offset: 0, 0

@@ -10,6 +10,7 @@ public class RedBullet extends Bullet {
     RedBullet()
     {
         power=50;
+        scale = 1.0f;
         sprite = new Sprite(TextureLoader.textures.findRegion("redlaser"));
         forEach();
         prepare();

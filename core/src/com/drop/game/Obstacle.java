@@ -21,8 +21,11 @@ import static com.badlogic.gdx.math.MathUtils.random;
 import static com.drop.game.GameScreen.center;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
+import static com.drop.game.MainMenuScreen.getPan;
+import static com.drop.game.MainMenuScreen.getVolume;
 import static com.drop.game.MainMenuScreen.reverseScl;
 import static com.drop.game.MainMenuScreen.scl;
+import static com.drop.game.MainMenuScreen.soundVolume;
 
 /**
  * Created by fiszu on 22.08.2017.
@@ -220,7 +223,7 @@ public class Obstacle implements Pool.Poolable {
         if(hp>0) {
             hp -= damage;
             healthBar.changeHp(hp);
-            hitMeteor.play(0.5f);
+            hitMeteor.play(soundVolume*0.5f*getVolume(getPosition()),1.0f,getPan(getPosition()));
         }
     }
 
@@ -245,7 +248,7 @@ public class Obstacle implements Pool.Poolable {
         if (hp <= 0) {
             if(!startExp)
             {
-                lilExp.play(1.0f);
+                lilExp.play(soundVolume*1.0f,1.0f,getPan(getPosition()));
                 spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
                 particles.addMeteorExp(sprite.getX()+sprite.getWidth()/2,sprite.getY()+sprite.getHeight()/2,meteorVelocity);
             }

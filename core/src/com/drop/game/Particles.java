@@ -40,7 +40,6 @@ public class Particles {
         particles.add(new Particle("meteorbang.p"));
         particles.add(new Particle("meteorShoot.p"));
 
-
         rocketEffects= new Array<ParticleEffectPool.PooledEffect>();
         rocketProp = new ParticleEffect();
         rocketProp.setEmittersCleanUpBlendFunction(false);
@@ -66,7 +65,7 @@ public class Particles {
     }
     void addMeteorShoot(float x, float y, Vector2 veloctiy)
     {
-        particles.get(0).addParticle(x,y,veloctiy);
+        particles.get(2).addParticle(x,y,veloctiy);
     }
     void draw(Batch batch)
     {
