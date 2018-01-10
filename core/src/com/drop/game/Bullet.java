@@ -1,6 +1,7 @@
 package com.drop.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -12,9 +13,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Pool;
-import com.drop.game.Behaviour;
-import com.drop.game.Obstacle;
-import com.drop.game.TextureLoader;
+
 
 import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.drop.game.GameScreen.center;
@@ -39,6 +38,7 @@ public class Bullet implements Pool.Poolable{
     protected Intersector intersector;
     protected boolean startExp = false, isAlive = true;
     protected float[] vertices=new float[8];
+    protected Sound shootingSound;
     Bullet()
     {
         //power = 30;
@@ -59,6 +59,7 @@ public class Bullet implements Pool.Poolable{
         bullet.y = position.y;
         behaviour = new Behaviour();
         collider = new Polygon();
+        shootingSound = TextureLoader.lilLaser;
     }
     public int getDmage()
     {
@@ -88,6 +89,7 @@ public class Bullet implements Pool.Poolable{
         bullet.x = position.x;
         bullet.y = position.y;
         isAlive=true;
+        shootingSound.play(1.0f);
     }
 
     public void move(Array<Obstacle> obstacles) {

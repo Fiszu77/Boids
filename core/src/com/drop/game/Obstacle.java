@@ -1,6 +1,7 @@
 package com.drop.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,6 +44,7 @@ public class Obstacle implements Pool.Poolable {
     private float mass = 240.0f, timePassed, angularVelocity=0f, phi=0f, radius = 0;  //=random(3)-1.5f
     private int hp = 700, maxHp = 700;
     private float[] vertices = new float[22];
+    private Sound lilExp, hitMeteor;
 
     private Sprite sprite;
     Obstacle(Spawner spawner) {
@@ -87,6 +89,8 @@ public class Obstacle implements Pool.Poolable {
         sprite = new Sprite(TextureLoader.textures.findRegion("meteorite"));
         sprite.setScale(scl*8.5f);
         radius = sprite.getWidth()/2;
+        lilExp = TextureLoader.lilExp;
+        hitMeteor = TextureLoader.hitMeteor;
 
     }
 
@@ -216,11 +220,7 @@ public class Obstacle implements Pool.Poolable {
         if(hp>0) {
             hp -= damage;
             healthBar.changeHp(hp);
-            //System.out.println("obst hp:"+hp);
-           // if (hp <= 0) {
-               // startExp = true;
-                //spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
-           // }
+            hitMeteor.play(0.5f);
         }
     }
 
@@ -245,6 +245,7 @@ public class Obstacle implements Pool.Poolable {
         if (hp <= 0) {
             if(!startExp)
             {
+                lilExp.play(1.0f);
                 spawner.spawnFromMeteor(new Vector2(meteorLocation), new Vector2(meteorVelocity));
                 particles.addMeteorExp(sprite.getX()+sprite.getWidth()/2,sprite.getY()+sprite.getHeight()/2,meteorVelocity);
             }

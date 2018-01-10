@@ -1,6 +1,7 @@
 package com.drop.game;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
@@ -31,6 +32,7 @@ public class Heart implements Pool.Poolable
     protected float percentage = 0.5f;
     protected boolean isAlive = true;
     protected Sprite sprite;
+    protected Sound healthUp;
     Heart()
     {
         sprite = new Sprite(TextureLoader.textures.findRegion("heart"));
@@ -41,6 +43,7 @@ public class Heart implements Pool.Poolable
         collider = new Polygon();
         sprite.setPosition(position.x-sprite.getWidth()/2,position.y-sprite.getHeight()/2);
         prepare();
+        healthUp = TextureLoader.healthUp;
     }
 
     void prepare()
@@ -94,6 +97,7 @@ public class Heart implements Pool.Poolable
             healable.heal(percentage);
             particles.addHeart(healable);
             isAlive=false;
+            healthUp.play();
         }
 
     }

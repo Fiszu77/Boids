@@ -4,3 +4,9 @@
 *-add more to spawner class
 *-particle effects
 -make allies look in same direction as player if not in motion(almost ready)
+
+
+
+-add credits
+-add ,,This game uses many sounds from freesound,
+    for the full list see here: http://www.mysite.com/work-credits.html" in credids

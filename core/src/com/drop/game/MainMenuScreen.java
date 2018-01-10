@@ -19,7 +19,7 @@ public class MainMenuScreen implements Screen {
     {
         music = Gdx.audio.newMusic(Gdx.files.internal("Waiting For Launch.mp3"));
         music.setLooping(true);
-        //music.play();
+        music.play();
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCREEN_WIDTH,SCREEN_HEIGHT);
