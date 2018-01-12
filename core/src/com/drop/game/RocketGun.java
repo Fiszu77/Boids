@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class RocketGun extends Gun {
-    protected float delay = 0.1f;
+    protected float delay = 0.6f;
     RocketGun(BulletManager bulletManager)
     {
         super(bulletManager);

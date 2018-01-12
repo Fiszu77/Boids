@@ -27,6 +27,7 @@ import static com.badlogic.gdx.Gdx.input;
 import static com.badlogic.gdx.Input.Keys.SPACE;
 import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.drop.game.GameScreen.center;
+import static com.drop.game.LevelManager.keepWithinBorders;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
 import static com.drop.game.MainMenuScreen.getPan;
 import static com.drop.game.MainMenuScreen.scl;
@@ -110,7 +111,7 @@ public class MotherBoid implements Healable{
         collider.setVertices(vertices);
         collider.setOrigin(boidsCollision.width/2,boidsCollision.height/2);
         guns = new Array<Gun>();
-        //guns.add(new RocketGun(bulletManager));
+        guns.add(new RocketGun(bulletManager));
         guns.add(new Gun(bulletManager));
         sprite = new Sprite(TextureLoader.textures.findRegion("spaceship3"));
         sprite.setScale(scl*8.5f);
@@ -242,6 +243,7 @@ public class MotherBoid implements Healable{
             }
             healthBar.logic(hp, getLocationVector());
         }
+        keepWithinBorders(position,sprite);
     }
 
     public void setPosition(Vector2 newPosition) {

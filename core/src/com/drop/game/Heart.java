@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.Pool;
 
 import Interfaces.Healable;
 
+import static com.drop.game.LevelManager.keepWithinBorders;
 import static com.drop.game.MainMenuScreen.scl;
 
 /**
@@ -89,6 +90,7 @@ public class Heart implements Pool.Poolable
         sprite.setPosition(position.x-sprite.getWidth()/2,position.y-sprite.getHeight()/2);
         collider.setOrigin(sprite.getWidth()*sprite.getScaleX()/2,sprite.getHeight()*sprite.getScaleX()/2);
         collider.setPosition(position.x-sprite.getWidth()*sprite.getScaleX()/2,position.y-sprite.getHeight()*sprite.getScaleX()/2);
+        keepWithinBorders(position,sprite);
     }
     public void heal(Healable healable, Particles particles)
     {

@@ -19,6 +19,8 @@ import com.badlogic.gdx.utils.Pool;
 import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.drop.game.GameScreen.center;
+import static com.drop.game.LevelManager.isInBorders;
+import static com.drop.game.LevelManager.keepWithinBorders;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
 import static com.drop.game.MainMenuScreen.getPan;
@@ -48,7 +50,7 @@ public class Obstacle implements Pool.Poolable {
     private int hp = 700, maxHp = 700;
     private float[] vertices = new float[22];
     private Sound lilExp, hitMeteor;
-
+    private boolean entered = false;
     private Sprite sprite;
     Obstacle(Spawner spawner) {
         healthBar = new HealthBar(maxHp, 0.7f, 1.0f, Color.RED);
@@ -101,6 +103,7 @@ public class Obstacle implements Pool.Poolable {
         isAlive = true;
         hp = maxHp;
         marked = false;
+        entered = false;
         angularVelocity =0;
         phi=0;
         healthBar = new HealthBar(maxHp, 0.7f, 2.0f, Color.RED);
@@ -245,6 +248,11 @@ public class Obstacle implements Pool.Poolable {
             isAlive = false;
         if (meteorLocation.y < center.y - SCREEN_HEIGHT * 2f)
             isAlive = false;
+
+        if(!entered) {
+            if (isInBorders(getPosition()))
+                entered = true;
+        }
         if (hp <= 0) {
             if(!startExp)
             {
@@ -263,6 +271,10 @@ public class Obstacle implements Pool.Poolable {
         meteorLocation.add(new Vector2().set(meteorVelocity));
         collider.setPosition(meteorLocation.x - meteorite.width / 2, meteorLocation.y - meteorite.height / 2);
         healthBar.logic(hp, getPosition());
+        if(entered)
+        {
+            keepWithinBorders(meteorLocation,sprite);
+        }
     }
 
     public void show(Batch batch) {

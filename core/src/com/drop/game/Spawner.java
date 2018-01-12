@@ -38,7 +38,7 @@ public class Spawner {
             return new Heart();
         }
     };
-    int level = 1, meteorChance = 3, boidChance = 6,heartChance = 7;
+    int level = 1, meteorChance = 3, boidChance = 6,heartChance = 6;
     float meteorTimeInterwal = 0.0f, boidTimeInterwal = 0f;
 
     Spawner(OrthographicCamera camera, Array<Obstacle> obstacles,  Array<SimpleBoid> boids,  MotherBoid player, BulletManager bulletManager) {

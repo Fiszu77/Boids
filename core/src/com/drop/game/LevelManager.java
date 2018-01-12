@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.Vector3;
@@ -211,5 +212,34 @@ public class LevelManager {
         for (Obstacle obstacle : obstacles) {
             obstacle.move(particles);
         }
+    }
+
+    public static void keepWithinBorders(Vector2 position, Sprite sprite)
+    {
+        if(position.x<center.x-SCREEN_WIDTH/2-sprite.getHeight())
+        {
+            position.x=SCREEN_WIDTH/2+center.x+sprite.getHeight();
+        }
+        if(position.x>center.x+SCREEN_WIDTH/2+sprite.getHeight())
+        {
+            position.x=center.x-SCREEN_WIDTH/2-sprite.getHeight();
+        }
+        if(position.y>center.y+SCREEN_HEIGHT/2+sprite.getHeight())
+        {
+            position.y=center.y-SCREEN_HEIGHT/2-sprite.getHeight();
+        }
+        if(position.y<center.y-SCREEN_HEIGHT/2-sprite.getHeight())
+        {
+            position.y=center.y+SCREEN_HEIGHT/2+sprite.getHeight();
+        }
+    }
+
+    public static boolean isInBorders(Vector2 position)
+    {
+        if(position.x>center.x-SCREEN_WIDTH/2&&position.x<center.x+SCREEN_WIDTH/2&&position.y<center.y+SCREEN_HEIGHT/2&&position.y>center.y-SCREEN_HEIGHT/2)
+        {
+            return true;
+        }
+        else return false;
     }
 }

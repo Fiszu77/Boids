@@ -7,6 +7,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
+import static com.drop.game.LevelManager.keepWithinBorders;
 import static com.drop.game.MainMenuScreen.scl;
 
 /**
@@ -65,6 +66,7 @@ public class Rocket extends Bullet {
                 }
 
         }
+        keepWithinBorders(position,sprite);
         velocity.limit2(speed*speed);
     }
     protected Vector2 follow (Vector2 desired, Vector2 location, Vector2 velocity) {

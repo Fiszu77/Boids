@@ -33,7 +33,7 @@ public class Physics {
             Vector2 v2After = new Vector2().set(v2TangentVector.add(v2NormalVector));
             boid.setPosition(boid.getLocationVector().add(mtv.normal.scl(mtv.depth * 1.2f)));
             boid.setVelocity(v1After);
-            obstacle.hit((int) ((v2After.sub(obstacle.getVelocity())).len() * reverseScl) * 60);
+            obstacle.hit((int) ((v2After.sub(obstacle.getVelocity())).len() * reverseScl) * 80);
             v2After.add(obstacle.getVelocity());
             obstacle.setVelocity(v2After);
             boid.damage((int) ((v1After.sub(boidsVelocity).len() * reverseScl)) * 10);
@@ -59,7 +59,7 @@ public class Physics {
             Vector2 v2After = new Vector2().set(v2TangentVector.add(v2NormalVector));
             boid.setPosition(boid.getLocationVector().add(mtv.normal.scl(mtv.depth * 1.2f)));
             boid.setVelocity(v1After);
-            obstacle.hit((int) ((v2After.sub(obstacle.getVelocity())).len() * reverseScl) * 60);
+            obstacle.hit((int) ((v2After.sub(obstacle.getVelocity())).len() * reverseScl) * 80);
             v2After.add(obstacle.getVelocity());
             obstacle.setVelocity(v2After);
             boid.damage((int) ((v1After.sub(boidsVelocity).len() * reverseScl)) * 10);
