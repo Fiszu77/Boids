@@ -23,6 +23,8 @@ import static com.badlogic.gdx.math.MathUtils.PI;
 import static com.badlogic.gdx.math.MathUtils.random;
 import static com.drop.game.Controls.shoot;
 import static com.drop.game.GameScreen.center;
+import static com.drop.game.LevelManager.isInBorders;
+import static com.drop.game.LevelManager.keepWithinBorders;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
 import static com.drop.game.MainMenuScreen.scl;
@@ -51,6 +53,7 @@ SimpleBoid implements Pool.Poolable {
     private HealthBar healthBar;
     private boolean startExp = false, isAlive = true, autoShoot, noObstacles = false;
     private float mass = 40.0f;
+    private boolean entered = false;
 
 
     private Sprite sprite;
@@ -61,6 +64,7 @@ SimpleBoid implements Pool.Poolable {
         shapeRenderer = new ShapeRenderer();
         collider = new Polygon();
         boid = new Rectangle();
+        physics = new Physics();
         boidsRotation = new Vector2(0, 1);
         boid.height = 16;
         boid.width = 16;
@@ -133,6 +137,7 @@ SimpleBoid implements Pool.Poolable {
         isAlive = true;
         hp = maxHp;
         healthBar = new HealthBar(maxHp, 0.5f, 1.0f, Color.GREEN);
+        entered = false;
         return this;
     }
 
@@ -199,6 +204,17 @@ SimpleBoid implements Pool.Poolable {
 
         accumulated += Gdx.graphics.getDeltaTime();
 
+        if(!entered)
+        {
+            if(isInBorders(position))
+            {
+                entered = true;
+            }
+        }
+        else
+        {
+            keepWithinBorders(position,sprite);
+        }
         if (autoShoot && accumulated >= period)//&&!noObstacles)
         {
             boidsRotation.nor();

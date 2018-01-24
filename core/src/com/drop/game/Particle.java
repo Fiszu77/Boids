@@ -38,6 +38,15 @@ public class Particle {
         effect.start();
         particleEffects.add(effect);
     }
+    void addFixedParticle(Vector2 position, Vector2 veloctiy)
+    {
+        ParticleEffectPool.PooledEffect effect = particlePool.obtain();
+        particlePos.add(position);
+        particleVel.add(new Vector2());
+        effect.scaleEffect(scl);
+        effect.start();
+        particleEffects.add(effect);
+    }
     void draw(Batch batch)
     {
         for(int i=particleEffects.size-1; i>=0; i--)

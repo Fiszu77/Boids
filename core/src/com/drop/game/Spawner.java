@@ -38,7 +38,7 @@ public class Spawner {
             return new Heart();
         }
     };
-    int level = 1, meteorChance = 3, boidChance = 6,heartChance = 6;
+    int level = 1, meteorChance = 3, boidChance = 6,heartChance = 5;
     float meteorTimeInterwal = 0.0f, boidTimeInterwal = 0f;
 
     Spawner(OrthographicCamera camera, Array<Obstacle> obstacles,  Array<SimpleBoid> boids,  MotherBoid player, BulletManager bulletManager) {
@@ -74,8 +74,12 @@ public class Spawner {
     }
     void spawnFromMeteor(Vector2 position, Vector2 velocity)
     {
-        if(random.nextInt(heartChance) == 0)
+        int drawn;
+        drawn = random.nextInt(heartChance);
+        System.out.println(drawn);
+        if( drawn == 0)
         {
+
             Heart heart = heartsPool.obtain();
             heart.init(position, velocity);
             hearts.add(heart);

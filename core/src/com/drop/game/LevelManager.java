@@ -2,17 +2,13 @@ package com.drop.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
-import com.badlogic.gdx.utils.Pool;
 
-import static com.badlogic.gdx.math.MathUtils.random;
 import static com.drop.game.GameScreen.center;
 import static com.drop.game.MainMenuScreen.SCREEN_HEIGHT;
 import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;

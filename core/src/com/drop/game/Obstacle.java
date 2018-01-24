@@ -42,6 +42,7 @@ public class Obstacle implements Pool.Poolable {
     private Polygon collider;
     private HealthBar healthBar;
     Spawner spawner;
+    Physics physics;
     private Rectangle meteorite;
     private Intersector.MinimumTranslationVector mtv;
     private Intersector intersector;
@@ -66,7 +67,7 @@ public class Obstacle implements Pool.Poolable {
         meteorVelocity.nor().scl(1f);
         intersector = new Intersector();
         expAnim = new Animation<TextureRegion>(0.10f, TextureLoader.meteorExpAtlas.getRegions());
-
+        physics = new Physics();
         vertices[0] = meteorite.width * 1 / 32;
         vertices[1] = meteorite.height * 13 / 32;
         vertices[2] = meteorite.width * 6 / 32;
@@ -183,7 +184,7 @@ public class Obstacle implements Pool.Poolable {
 
     public boolean collide(Obstacle menace) {
         if (Intersector.overlapConvexPolygons(collider, menace.getPolygon(), mtv)) {
-            Physics.collideWithObstacle(this, menace, mtv);
+            physics.collideWithObstacle(this, menace, mtv);
             return true;
         } else
             return false;
@@ -204,7 +205,7 @@ public class Obstacle implements Pool.Poolable {
     public float getAngularVelocity(){return this.angularVelocity;}
 
     public Vector2 getPosition() {
-        return new Vector2(meteorLocation);
+        return meteorLocation.cpy();
     }
 
     public void setVelocity(Vector2 newVelocity) {

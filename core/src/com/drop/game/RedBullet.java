@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 public class RedBullet extends Bullet {
     RedBullet()
     {
-        power=50;
+        power=500;
         scale = 1.0f;
         sprite = new Sprite(TextureLoader.textures.findRegion("redlaser"));
         forEach();

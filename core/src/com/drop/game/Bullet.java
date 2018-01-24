@@ -40,7 +40,7 @@ public class Bullet implements Pool.Poolable{
     protected Polygon collider;
     protected Intersector intersector;
     protected boolean startExp = false, isAlive = true;
-    protected float[] vertices=new float[8];
+    protected float[] vertices=new float[2];
     protected Sound shootingSound;
     Bullet()
     {
@@ -61,7 +61,6 @@ public class Bullet implements Pool.Poolable{
         bullet.x = position.x;
         bullet.y = position.y;
         behaviour = new Behaviour();
-        collider = new Polygon();
         shootingSound = TextureLoader.lilLaser;
     }
     public int getDmage()
@@ -75,15 +74,6 @@ public class Bullet implements Pool.Poolable{
         bullet.width = sprite.getWidth();
         bullet.width=bullet.width* scale;
         bullet.height=bullet.height*scale;
-        vertices[0]=bullet.x;
-        vertices[1]=bullet.y;
-        vertices[2]=bullet.x+bullet.width;
-        vertices[3]=bullet.y;
-        vertices[4]=bullet.x+bullet.width;
-        vertices[5]=bullet.y+bullet.height;
-        vertices[6]=bullet.x;
-        vertices[7]=bullet.y+bullet.height;
-        collider.setVertices(vertices);
     }
     public void init(Vector2 position, Vector2 velocity) {
         velocity.scl(scl*initSpeed);
@@ -123,9 +113,6 @@ public class Bullet implements Pool.Poolable{
     protected void behave(Array<Obstacle> obstacles)
     {}
      void show(Batch batch) {
-        collider.setOrigin(bullet.width/2,bullet.height/2);
-        collider.setPosition(bullet.x-bullet.width/2,bullet.y-bullet.height/2);
-        collider.setRotation(degrees-90.0f);
         degrees = (((float)Math.atan2((double)getVelocityVector().y,getVelocityVector().x))*180.0f) /PI;
         if(degrees<0)
         {
@@ -147,8 +134,9 @@ public class Bullet implements Pool.Poolable{
         return new Vector2().set(position);
     }
 
-    public Polygon getPolygon() {
-        return collider;
+    public Vector2 getPositionCenter()
+    {
+        return new Vector2(sprite.getX(),sprite.getY());
     }
 
     public float getPower() {
@@ -156,7 +144,7 @@ public class Bullet implements Pool.Poolable{
     }
 
     public Vector2 getVelocityVector() {
-        return new Vector2().set(velocity);
+        return velocity.cpy();
     }
 
     @Override

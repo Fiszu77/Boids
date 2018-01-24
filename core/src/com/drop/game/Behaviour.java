@@ -95,7 +95,7 @@ public class Behaviour {
             if (!boids.get(i).equals(theBoid)) {
                 if ((boids.get(i).getLocationVector().dst(theBoid.getLocationVector())) < cohR) {
                     if (boids.get(i).type() == "MotherBoid") {
-                        mass.add(new Vector2(boids.get(i).getLocationVector()).scl(10.0f));
+                        mass.add(boids.get(i).getLocationVector().cpy().scl(10.0f));
                         count += 1;
                     } else {
                         mass.add(boids.get(i).getLocationVector());

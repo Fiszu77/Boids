@@ -97,7 +97,7 @@ public class Heart implements Pool.Poolable
         if(intersector.overlapConvexPolygons(healable.getCollider(),collider)&&isAlive)
         {
             healable.heal(percentage);
-            particles.addHeart(healable);
+            particles.addHealthPicked(healable.position(),healable.position());
             isAlive=false;
             healthUp.play();
         }
