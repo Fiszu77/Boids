@@ -6,6 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -19,7 +22,7 @@ import static com.drop.game.MainMenuScreen.SCREEN_WIDTH;
 
 public class LevelManager {
 
-    private boolean debug = false;
+    private boolean debug = true;
     private Array<Obstacle> obstacles;
     private Array<SimpleBoid> boids;
     private Particles particles;
@@ -68,7 +71,7 @@ public class LevelManager {
         manageBoidPools();
         manageObstaclesPools();
         manageHeartsPool();
-        bulletManager.bulletsLogic(obstacles,particles);
+        bulletManager.bulletsLogic(obstacles, particles);
 
         if (playerShip.isAlive()) {
             for (int i = 0; i < obstacles.size; i++) {
@@ -210,32 +213,41 @@ public class LevelManager {
         }
     }
 
-    public static void keepWithinBorders(Vector2 position, Sprite sprite)
-    {
-        if(position.x<center.x-SCREEN_WIDTH/2-sprite.getHeight())
-        {
-            position.x=SCREEN_WIDTH/2+center.x+sprite.getHeight();
+    public static void keepWithinBorders(Vector2 position, Sprite sprite) {
+        if (position.x < center.x - SCREEN_WIDTH / 2 - sprite.getHeight()) {
+            position.x = SCREEN_WIDTH / 2 + center.x + sprite.getHeight();
         }
-        if(position.x>center.x+SCREEN_WIDTH/2+sprite.getHeight())
-        {
-            position.x=center.x-SCREEN_WIDTH/2-sprite.getHeight();
+        if (position.x > center.x + SCREEN_WIDTH / 2 + sprite.getHeight()) {
+            position.x = center.x - SCREEN_WIDTH / 2 - sprite.getHeight();
         }
-        if(position.y>center.y+SCREEN_HEIGHT/2+sprite.getHeight())
-        {
-            position.y=center.y-SCREEN_HEIGHT/2-sprite.getHeight();
+        if (position.y > center.y + SCREEN_HEIGHT / 2 + sprite.getHeight()) {
+            position.y = center.y - SCREEN_HEIGHT / 2 - sprite.getHeight();
         }
-        if(position.y<center.y-SCREEN_HEIGHT/2-sprite.getHeight())
-        {
-            position.y=center.y+SCREEN_HEIGHT/2+sprite.getHeight();
+        if (position.y < center.y - SCREEN_HEIGHT / 2 - sprite.getHeight()) {
+            position.y = center.y + SCREEN_HEIGHT / 2 + sprite.getHeight();
         }
     }
 
-    public static boolean isInBorders(Vector2 position)
-    {
-        if(position.x>center.x-SCREEN_WIDTH/2&&position.x<center.x+SCREEN_WIDTH/2&&position.y<center.y+SCREEN_HEIGHT/2&&position.y>center.y-SCREEN_HEIGHT/2)
-        {
+    public static boolean isInBorders(Vector2 position) {
+        if (position.x > center.x - SCREEN_WIDTH / 2 && position.x < center.x + SCREEN_WIDTH / 2 && position.y < center.y + SCREEN_HEIGHT / 2 && position.y > center.y - SCREEN_HEIGHT / 2) {
             return true;
-        }
-        else return false;
+        } else return false;
     }
+
+    public static boolean overlaps(Polygon polygon, Circle circle) {
+        float[] vertices = polygon.getTransformedVertices();
+        Vector2 center = new Vector2(circle.x, circle.y);
+        float squareRadius = circle.radius * circle.radius;
+        for (int i = 0; i < vertices.length; i += 2) {
+            if (i == 0) {
+                if (Intersector.intersectSegmentCircle(new Vector2(vertices[vertices.length - 2], vertices[vertices.length - 1]), new Vector2(vertices[i], vertices[i + 1]), center, squareRadius))
+                    return true;
+            } else {
+                if (Intersector.intersectSegmentCircle(new Vector2(vertices[i - 2], vertices[i - 1]), new Vector2(vertices[i], vertices[i + 1]), center, squareRadius))
+                    return true;
+            }
+        }
+        return false;
+    }
+
 }

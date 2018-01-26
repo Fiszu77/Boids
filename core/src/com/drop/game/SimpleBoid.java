@@ -46,7 +46,7 @@ SimpleBoid implements Pool.Poolable {
     private Behaviour behaviour;
     private Animation<TextureRegion> propAnim, expAnim;
     private float timePassed;
-    private float[] vertices = new float[16];
+    private float[] vertices = new float[6];
     private Intersector.MinimumTranslationVector mtv;
     private Physics physics;
     private Polygon collider;
@@ -115,20 +115,11 @@ SimpleBoid implements Pool.Poolable {
         boidsVelocity.nor().scl(((random(100.0f) + 200.0f) / mass) * scl);
         vertices[0] = 0;
         vertices[1] = 0;
-        vertices[2] = boid.width * 0.75f;
+        vertices[2] = boid.width ;
         vertices[3] = 0;
-        vertices[4] = boid.width * 0.75f;
-        vertices[5] = boid.height * 5.0f / 16.0f;
-        vertices[6] = boid.width * 0.5f;
-        vertices[7] = boid.height * 7.0f / 16.0f;
-        vertices[8] = boid.width / 2;
-        vertices[9] = boid.height * 11.0f / 16.0f;
-        vertices[10] = boid.width * 4.0f / 16.0f;
-        vertices[11] = boid.height * 11.0f / 16.0f;
-        vertices[12] = boid.width * 4.0f / 16.0f;
-        vertices[13] = boid.height * 7.0f / 16.0f;
-        vertices[14] = 0;
-        vertices[15] = boid.height * 5.0f / 16.0f;
+        vertices[4] = boid.width * 0.5f;
+        vertices[5] = boid.height ;
+
 
         collider.setVertices(vertices);
         collider.setOrigin(boid.width * 0.75f / 2, boid.height * 10.0f / 32);

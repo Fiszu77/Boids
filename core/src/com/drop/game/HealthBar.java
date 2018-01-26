@@ -50,7 +50,7 @@ public class HealthBar {
     }
     void render(ShapeRenderer shapeRenderer)
     {
-        if(alpha>0.0f) {
+        if(alpha>0.0f && hp>0) {
             color.set(color.r,color.g,color.b,alpha);
             shapeRenderer.set(ShapeRenderer.ShapeType.Line);
             shapeRenderer.setColor(1,1,1,alpha);
