@@ -38,8 +38,8 @@ public class Spawner {
             return new Heart();
         }
     };
-    int level = 1, meteorChance = 3, boidChance = 6,heartChance = 5;
-    float meteorTimeInterwal = 0.0f, boidTimeInterwal = 0f;
+    private int level = 1, meteorChance = 3, boidChance = 6,heartChance = 5, meteorCount = 0, maxMeteor = 5, boidsCount = 0, maxBoids = 5;
+    private float meteorTimeInterwal = 0.0f, boidTimeInterwal = 0f;
 
     Spawner(OrthographicCamera camera, Array<Obstacle> obstacles,  Array<SimpleBoid> boids,  MotherBoid player, BulletManager bulletManager) {
         this.player = player;
@@ -53,23 +53,43 @@ public class Spawner {
 
     void spawn() {
         meteorTimeInterwal += Gdx.graphics.getDeltaTime();
-        if (meteorTimeInterwal >= 2f) {
+        if (meteorTimeInterwal >= 2f && meteorCount < maxMeteor) {
             if (random.nextInt(meteorChance) == 0) {
                 Obstacle meteorite = meteoritesPool.obtain();
                 meteorite.init();
                 obstacles.add(meteorite);
+                meteorCount++;
             }
             meteorTimeInterwal = 0f;
         }
 
         boidTimeInterwal += Gdx.graphics.getDeltaTime();
-        if (boidTimeInterwal >= 3.0f) {
+        if (boidTimeInterwal >= 3.0f&& boidsCount<maxBoids) {
             if (random.nextInt(boidChance) == 0) {
                 SimpleBoid boid = simpleBoidPool.obtain();
                 boid.init();
                 boids.add(boid);
+                boidsCount++;
             }
             boidTimeInterwal = 0f;
+        }
+    }
+    void addMeteor()
+    {
+        if (meteorCount < maxMeteor) {
+                Obstacle meteorite = meteoritesPool.obtain();
+                meteorite.init();
+                obstacles.add(meteorite);
+                meteorCount++;
+        }
+    }
+    void addBoid()
+    {
+        if ( boidsCount<maxBoids) {
+                SimpleBoid boid = simpleBoidPool.obtain();
+                boid.init();
+                boids.add(boid);
+                boidsCount++;
         }
     }
     void spawnFromMeteor(Vector2 position, Vector2 velocity)
@@ -79,7 +99,6 @@ public class Spawner {
         System.out.println(drawn);
         if( drawn == 0)
         {
-
             Heart heart = heartsPool.obtain();
             heart.init(position, velocity);
             hearts.add(heart);
@@ -88,5 +107,14 @@ public class Spawner {
     Spawner spawner()
     {
         return this;
+    }
+
+    void freeBoid()
+    {
+        boidsCount--;
+    }
+    void freeMeteoor()
+    {
+        meteorCount--;
     }
 }

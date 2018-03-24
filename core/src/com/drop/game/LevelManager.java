@@ -56,11 +56,10 @@ public class LevelManager {
 
     public void logic() {
         if (controls.newMeteor || Gdx.input.isKeyJustPressed(Input.Keys.M)) {
-            obstacles.add(spawner.meteoritesPool.obtain());
-            obstacles.peek().init();
+            spawner.addMeteor();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-            boids.add(spawner.simpleBoidPool.obtain().init());
+            spawner.addBoid();
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.D)) {
             debug = !debug;
@@ -161,6 +160,7 @@ public class LevelManager {
             if (!obstacles.get(i).isAlive()) {
                 spawner.meteoritesPool.free(obstacle);
                 obstacles.removeIndex(i);
+                spawner.freeMeteoor();
                 len--;
             }
         }
@@ -174,6 +174,7 @@ public class LevelManager {
                 if (!boids.get(i).isAlive()) {
                     spawner.simpleBoidPool.free(boid.getSimple());
                     boids.removeIndex(i);
+                    spawner.freeBoid();
                     len--;
                 }
 
