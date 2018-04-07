@@ -25,7 +25,7 @@ public class Rocket extends Bullet {
         power=random.nextInt(100)+300;
         scale = 2f;
         speed = 40f*scl;
-        initSpeed = 30f;
+        initSpeed = 24f;
         sprite = new Sprite(TextureLoader.textures.findRegion("rocket"));
         forEach();
         prepare();
@@ -66,7 +66,7 @@ public class Rocket extends Bullet {
                 }
 
         }
-        keepWithinBorders(position,sprite);
+        //keepWithinBorders(position,sprite);
         velocity.limit2(speed*speed);
     }
     protected Vector2 follow (Vector2 desired, Vector2 location, Vector2 velocity) {

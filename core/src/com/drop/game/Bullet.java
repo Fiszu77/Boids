@@ -98,6 +98,10 @@ public class Bullet implements Pool.Poolable{
             isAlive=false;
         if(position.y<center.y-SCREEN_HEIGHT)
             isAlive=false;
+
+    }
+    public void seek(Array<Obstacle> obstacles,Particles particles)
+    {
         for(Obstacle obstacle: obstacles) {
             if(!obstacle.isStartExp()) {
                 if (intersector.isPointInPolygon(obstacle.getPolygon().getTransformedVertices(), 0, obstacle.getPolygon().getTransformedVertices().length, position.x, position.y)) {
@@ -109,7 +113,6 @@ public class Bullet implements Pool.Poolable{
             }
         }
     }
-
     protected void behave(Array<Obstacle> obstacles)
     {}
      void show(Batch batch) {

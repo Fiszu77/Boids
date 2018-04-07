@@ -1,5 +1,6 @@
 package com.drop.game;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -21,6 +22,7 @@ public class BulletManager {
     private static Pool<Bullet> basicBulletsPool;
     private static Pool<Bullet> greenBulletsPool;
     private static Pool<Bullet> rocketsPool;
+    private float time=0, period = 0.03f;
     Bullet temp;
 
     BulletManager() {
@@ -45,22 +47,41 @@ public class BulletManager {
             }
         };
         rockets = new Array<Bullet>();
+        time = 0;
     }
 
     public void bulletsLogic(Array<Obstacle> obstacles,Particles particles) {
-        for (Bullet bullet : redBullets) {
-            bullet.move(obstacles,particles);
 
-        }
-        for (Bullet bullet : greenBullets) {
-            bullet.move(obstacles,particles);
+        time+=Gdx.graphics.getDeltaTime();
 
-        }
-        for (Bullet bullet : rockets) {
-            bullet.move(obstacles,particles);
+            for (Bullet bullet : redBullets) {
+                bullet.move(obstacles, particles);
 
+            }
+            for (Bullet bullet : greenBullets) {
+                bullet.move(obstacles, particles);
+
+            }
+            for (Bullet bullet : rockets) {
+                bullet.move(obstacles, particles);
+
+            }
+        if(time>period) {
+            for (Bullet bullet : redBullets) {
+                bullet.seek(obstacles, particles);
+
+            }
+            for (Bullet bullet : greenBullets) {
+                bullet.seek(obstacles, particles);
+
+            }
+            for (Bullet bullet : rockets) {
+                bullet.seek(obstacles, particles);
+
+            }
+            checkDeaths();
+            time=0;
         }
-        checkDeaths();
         bulletsAlive = redBullets.size+greenBullets.size;
     }
 

@@ -112,7 +112,7 @@ public class MotherBoid implements Healable{
         collider.setVertices(vertices);
         collider.setOrigin(boidsCollision.width/2,boidsCollision.height/2);
         guns = new Array<Gun>();
-       // guns.add(new RocketGun(bulletManager));
+        guns.add(new RocketGun(bulletManager));
         guns.add(new Gun(bulletManager));
         sprite = new Sprite(TextureLoader.textures.findRegion("spaceship3"));
         sprite.setScale(scl*8.5f);

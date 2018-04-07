@@ -36,6 +36,7 @@ public class LevelManager {
     OrthographicCamera camera;
     private int len = 0, simpleIndex, objAm;
     private Controls controls;
+    private float time=0, period=0.03f;
 
     LevelManager(OrthographicCamera camera, ShapeRenderer shapeRenderer) {
 
@@ -71,15 +72,7 @@ public class LevelManager {
         manageObstaclesPools();
         manageHeartsPool();
         bulletManager.bulletsLogic(obstacles, particles);
-
-        if (playerShip.isAlive()) {
-            for (int i = 0; i < obstacles.size; i++) {
-                playerShip.isColliding(obstacles.get(i));
-            }
-            for (Heart heart : spawner.hearts) {
-                heart.heal(playerShip, particles);
-            }
-        }
+        time+=Gdx.graphics.getDeltaTime();
         if (controls.getSteeringVelocity().len() > 0.0f) {
             playerShip.steer(controls.getSteeringVelocity());
         } else {
@@ -87,34 +80,48 @@ public class LevelManager {
         }
         for (SimpleBoid boid : boids) {
             boid.applyRules(boids, playerShip);
-            boid.isColliding(obstacles);
+
         }
-        boolean collidingPairs[][] = new boolean[obstacles.size][obstacles.size];
-        for (int i = 0; i < obstacles.size; i++) {
-            for (int j = 0; j < obstacles.size; j++) {
-                collidingPairs[i][j] = false;
+        if(time>period) {
+            if (playerShip.isAlive()) {
+                for (int i = 0; i < obstacles.size; i++) {
+                    playerShip.isColliding(obstacles.get(i));
+                }
+                for (Heart heart : spawner.hearts) {
+                    heart.heal(playerShip, particles);
+                }
             }
-        }
-        for (int i = 0; i < obstacles.size; i++) {
-            for (int j = 0; j < obstacles.size; j++) {
-                if (!(collidingPairs[i][j] || i == j)) {
-                    if (obstacles.get(i).collide(obstacles.get(j))) {
-                        Vector2 touchSpot = new Vector2(obstacles.get(j).getPosition()).sub(obstacles.get(i).getPosition());
-                        touchSpot.scl(0.5f);
-                        touchSpot.add(obstacles.get(i).getPosition());
-                        particles.addMeteorSliver(touchSpot.x, touchSpot.y, new Vector2((obstacles.get(i).getVelocity()).add(obstacles.get(j).getVelocity())).scl(0.5f));
-                        collidingPairs[i][j] = collidingPairs[j][i] = true;
+
+            for (SimpleBoid boid : boids) {
+
+                boid.isColliding(obstacles);
+            }
+            boolean collidingPairs[][] = new boolean[obstacles.size][obstacles.size];
+            for (int i = 0; i < obstacles.size; i++) {
+                for (int j = 0; j < obstacles.size; j++) {
+                    collidingPairs[i][j] = false;
+                }
+            }
+            for (int i = 0; i < obstacles.size; i++) {
+                for (int j = 0; j < obstacles.size; j++) {
+                    if (!(collidingPairs[i][j] || i == j)) {
+                        if (obstacles.get(i).collide(obstacles.get(j))) {
+                            Vector2 touchSpot = new Vector2(obstacles.get(j).getPosition()).sub(obstacles.get(i).getPosition());
+                            touchSpot.scl(0.5f);
+                            touchSpot.add(obstacles.get(i).getPosition());
+                            particles.addMeteorSliver(touchSpot.x, touchSpot.y, new Vector2((obstacles.get(i).getVelocity()).add(obstacles.get(j).getVelocity())).scl(0.5f));
+                            collidingPairs[i][j] = collidingPairs[j][i] = true;
+                        }
                     }
                 }
             }
+            time = 0;
         }
         behaviour.moveBoids(boids);
         playerShip.move();
         spawner.spawn();
         if (obstacles.size + boids.size != objAm) {
             objAm = obstacles.size + boids.size;
-            //System.out.println("Objects amount: " + (objAm));
-            //System.out.println("Bullets amount: " + (bulletManager.bulletsAlive));
         }
     }
 
